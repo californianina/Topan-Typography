@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Topan by Laura — Variações Hero Banner</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F9F8F6;
+    --text: #111;
+    --text-muted: #888;
+    --text-faint: #bbb;
+    --border: rgba(0,0,0,0.1);
+    --card-bg: #fff;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+    padding: 48px 32px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* HEADER */
+  .page-header {
+    margin-bottom: 48px;
+    padding-bottom: 24px;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .page-tag {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .page-title {
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .page-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 40px;
+  }
+  .tab-btn {
+    padding: 8px 20px;
+    border: 0.5px solid #ccc;
+    background: #fff;
+    color: #555;
+    cursor: pointer;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    border-radius: 4px;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .tab-btn.active {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+  }
+  .tab-btn:hover:not(.active) {
+    border-color: #888;
+    color: #111;
+  }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 12px;
+    margin-top: 40px;
+  }
+  .section-label:first-child { margin-top: 0; }
+
+  /* DESKTOP HERO */
+  .hero-desktop {
+    position: relative;
+    width: 100%;
+    height: 480px;
+    overflow: hidden;
+    border-radius: 2px;
+  }
+  .hero-bg {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(160deg, #d0c8c0 0%, #9a9088 50%, #6a6058 100%);
+    position: absolute;
+    top: 0; left: 0;
+  }
+  .hero-img-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    z-index: 1;
+    pointer-events: none;
+  }
+  .hero-fade {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .hero-content {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    z-index: 3;
+  }
+
+  /* VARIAÇÃO 1 */
+  .v1-fade { height: 220px; background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%); }
+  .v1-inner { padding: 40px 48px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .v1-tag { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 10px; }
+  .v1-title { font-size: 20px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; line-height: 1.25; margin-bottom: 20px; }
+  .v1-btn { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.65); padding-bottom: 3px; }
+
+  /* VARIAÇÃO 2 */
+  .v2-fade { height: 280px; background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 100%); }
+  .v2-inner { padding: 40px 48px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .v2-tag { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 10px; }
+  .v2-title { font-size: 26px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: #fff; line-height: 1.15; margin-bottom: 22px; }
+  .v2-btn { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #fff; border: 1px solid rgba(255,255,255,0.75); padding: 11px 32px; }
+
+  /* VARIAÇÃO 3 */
+  .v3-fade { height: 240px; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%); }
+  .v3-inner { padding: 40px 52px; text-align: left; }
+  .v3-tag { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 10px; }
+  .v3-title { font-family: Georgia, 'Times New Roman', serif; font-size: 30px; font-weight: 300; letter-spacing: 0.01em; color: #fff; line-height: 1.2; margin-bottom: 20px; }
+  .v3-btn { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.65); padding-bottom: 3px; display: inline-block; }
+
+  .var-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 10px;
+    line-height: 1.6;
+  }
+
+  /* MOBILE GRID */
+  .mobile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .mobile-col { display: flex; flex-direction: column; align-items: center; }
+  .mobile-col-title {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .mobile-frame {
+    width: 180px;
+    border: 5px solid #111;
+    border-radius: 26px;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .mobile-notch {
+    width: 56px;
+    height: 13px;
+    background: #111;
+    border-radius: 0 0 9px 9px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+  .mobile-screen {
+    position: relative;
+    height: 340px;
+    overflow: hidden;
+  }
+
+  /* MOBILE V1 */
+  .mv1-inner { padding: 18px 14px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .mv1-tag { font-size: 7px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 6px; }
+  .mv1-title { font-size: 11px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: #fff; line-height: 1.25; margin-bottom: 12px; }
+  .mv1-btn { font-size: 7px; letter-spacing: 0.16em; text-transform: uppercase; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.65); padding-bottom: 2px; }
+
+  /* MOBILE V2 */
+  .mv2-inner { padding: 18px 14px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .mv2-tag { font-size: 7px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 6px; }
+  .mv2-title { font-size: 13px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; color: #fff; line-height: 1.2; margin-bottom: 14px; }
+  .mv2-btn { font-size: 7px; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; border: 1px solid rgba(255,255,255,0.75); padding: 6px 16px; }
+
+  /* MOBILE V3 */
+  .mv3-inner { padding: 18px 16px; text-align: left; }
+  .mv3-tag { font-size: 7px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 6px; }
+  .mv3-title { font-family: Georgia, serif; font-size: 15px; font-weight: 300; color: #fff; line-height: 1.2; margin-bottom: 12px; }
+  .mv3-btn { font-size: 7px; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.65); padding-bottom: 2px; display: inline-block; }
+
+  .mob-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* INSTRUCOES */
+  .instrucoes {
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 0.5px solid var(--border);
+  }
+  .instrucoes h2 {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+  .instr-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .instr-card {
+    background: #fff;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 20px;
+  }
+  .instr-num {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--text-faint);
+    margin-bottom: 8px;
+  }
+  .instr-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .instr-text {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  .escolha-box {
+    margin-top: 24px;
+    background: #fff;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 20px 24px;
+  }
+  .escolha-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .escolha-text {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .var-options {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .var-pill {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    border: 0.5px solid #ccc;
+    padding: 5px 14px;
+    border-radius: 2px;
+    color: var(--text-muted);
+    cursor: default;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="page-tag">Topan by Laura · Redesign Homepage</div>
+  <div class="page-title">Variações — Hero Banner</div>
+  <div class="page-desc">Três opções de layout para o banner principal (hero) da homepage. Cada variação tem posição e estilo de texto diferentes. Escolha a que mais combina com a identidade da marca.</div>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="setTab('desktop')">Desktop</button>
+  <button class="tab-btn" onclick="setTab('mobile')">Mobile</button>
+</div>
+
+<!-- DESKTOP -->
+<div id="tab-desktop" class="panel active">
+
+  <div class="section-label">Variação 1 — Texto centralizado na base · botão underline · estilo Paula Raia</div>
+  <div class="hero-desktop">
+    <div class="hero-bg"></div>
+    <div class="hero-img-label">sua imagem aqui</div>
+    <div class="hero-fade v1-fade"></div>
+    <div class="hero-content">
+      <div class="v1-inner">
+        <div class="v1-tag">Coleção Wasabi</div>
+        <div class="v1-title">Onde a moda encontra a arte</div>
+        <div class="v1-btn">Shop Now</div>
+      </div>
+    </div>
+  </div>
+  <div class="var-desc">Texto e botão centralizados · fade escuro suave · botão underline discreto como na Paula Raia</div>
+
+  <div class="section-label">Variação 2 — Texto centralizado · botão com borda · estilo Cris Barros</div>
+  <div class="hero-desktop">
+    <div class="hero-bg"></div>
+    <div class="hero-img-label">sua imagem aqui</div>
+    <div class="hero-fade v2-fade"></div>
+    <div class="hero-content">
+      <div class="v2-inner">
+        <div class="v2-tag">AW26 — Alto Inverno</div>
+        <div class="v2-title">Lançamento<br>Alto Inverno</div>
+        <div class="v2-btn">Shop Now</div>
+      </div>
+    </div>
+  </div>
+  <div class="var-desc">Título maior e mais impactante · botão com borda branca · mais presença visual como na Cris Barros</div>
+
+  <div class="section-label">Variação 3 — Texto à esquerda · fonte serifada · editorial</div>
+  <div class="hero-desktop">
+    <div class="hero-bg"></div>
+    <div class="hero-img-label">sua imagem aqui</div>
+    <div class="hero-fade v3-fade"></div>
+    <div class="hero-content">
+      <div class="v3-inner">
+        <div class="v3-tag">Coleção Wasabi</div>
+        <div class="v3-title">Onde a moda<br>encontra a arte</div>
+        <div class="v3-btn">ver coleção</div>
+      </div>
+    </div>
+  </div>
+  <div class="var-desc">Alinhado à esquerda · serifada elegante no título · assimétrico e editorial</div>
+
+</div>
+
+<!-- MOBILE -->
+<div id="tab-mobile" class="panel">
+
+  <div class="mobile-grid">
+
+    <div class="mobile-col">
+      <div class="mobile-col-title">Variação 1</div>
+      <div class="mobile-frame">
+        <div class="mobile-notch"></div>
+        <div class="mobile-screen">
+          <div class="hero-bg"></div>
+          <div class="hero-fade v1-fade"></div>
+          <div class="hero-content">
+            <div class="mv1-inner">
+              <div class="mv1-tag">Coleção Wasabi</div>
+              <div class="mv1-title">Onde a moda encontra a arte</div>
+              <div class="mv1-btn">Shop Now</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mob-desc">Centro base<br>botão underline</div>
+    </div>
+
+    <div class="mobile-col">
+      <div class="mobile-col-title">Variação 2</div>
+      <div class="mobile-frame">
+        <div class="mobile-notch"></div>
+        <div class="mobile-screen">
+          <div class="hero-bg"></div>
+          <div class="hero-fade v2-fade"></div>
+          <div class="hero-content">
+            <div class="mv2-inner">
+              <div class="mv2-tag">AW26</div>
+              <div class="mv2-title">Lançamento<br>Alto Inverno</div>
+              <div class="mv2-btn">Shop Now</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mob-desc">Centro<br>botão com borda</div>
+    </div>
+
+    <div class="mobile-col">
+      <div class="mobile-col-title">Variação 3</div>
+      <div class="mobile-frame">
+        <div class="mobile-notch"></div>
+        <div class="mobile-screen">
+          <div class="hero-bg"></div>
+          <div class="hero-fade v3-fade"></div>
+          <div class="hero-content">
+            <div class="mv3-inner">
+              <div class="mv3-tag">Coleção Wasabi</div>
+              <div class="mv3-title">Onde a moda encontra a arte</div>
+              <div class="mv3-btn">ver coleção</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mob-desc">Esquerda<br>serifada editorial</div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- INSTRUÇÕES -->
+<div class="instrucoes">
+  <h2>Como escolher</h2>
+  <div class="instr-grid">
+    <div class="instr-card">
+      <div class="instr-num">01</div>
+      <div class="instr-title">Veja nos dois formatos</div>
+      <div class="instr-text">Alterne entre Desktop e Mobile para ver como cada variação se comporta em telas diferentes.</div>
+    </div>
+    <div class="instr-card">
+      <div class="instr-num">02</div>
+      <div class="instr-title">Considere a imagem</div>
+      <div class="instr-text">O fundo cinza é um placeholder. Com a foto real da coleção, o impacto visual pode ser bem diferente.</div>
+    </div>
+    <div class="instr-card">
+      <div class="instr-num">03</div>
+      <div class="instr-title">Pode misturar</div>
+      <div class="instr-text">É possível combinar elementos — ex: posição central da V1 com botão com borda da V2, ou serifada da V3 com posição central.</div>
+    </div>
+  </div>
+
+  <div class="escolha-box">
+    <div class="escolha-title">Qual variação você prefere?</div>
+    <div class="escolha-text">Responda para a Nina qual(is) variação(ões) você prefere, ou descreva o que gostou e não gostou em cada uma. Com base no seu feedback, o layout será implementado no site.</div>
+    <div class="var-options">
+      <div class="var-pill">Variação 1 — centro + underline</div>
+      <div class="var-pill">Variação 2 — centro + borda</div>
+      <div class="var-pill">Variação 3 — esquerda + serifada</div>
+      <div class="var-pill">Mistura de elementos</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function setTab(tab) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    if (b.textContent.toLowerCase().trim() === tab) b.classList.add('active');
+  });
+}
+</script>
+
+</body>
+</html>
