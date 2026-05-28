@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Topan by Laura — Variações Hero Banner</title>
+<link rel="stylesheet" href="https://use.typekit.net/uyh8pui.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F9F8F6;
+  --text: #111;
+  --muted: #888;
+  --faint: #bbb;
+  --border: rgba(0,0,0,0.1);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "futura-pt", sans-serif;
+  padding: 40px 28px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.page-header { margin-bottom: 36px; padding-bottom: 20px; border-bottom: 0.5px solid var(--border); }
+.page-tag { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.page-title { font-size: 20px; font-weight: 300; letter-spacing: 0.04em; margin-bottom: 6px; }
+.page-desc { font-size: 12px; color: var(--muted); line-height: 1.7; max-width: 560px; }
+
+.tabs-main { display: flex; gap: 6px; margin-bottom: 28px; flex-wrap: wrap; }
+.tab-main {
+  padding: 7px 18px; border: 0.5px solid #ccc; background: #fff; color: #555;
+  cursor: pointer; font-size: 11px; letter-spacing: 0.06em; border-radius: 3px;
+  transition: all 0.15s; font-family: inherit;
+}
+.tab-main.active { background: #111; color: #fff; border-color: #111; }
+
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* CONTROLES */
+.controls-bar {
+  display: flex; gap: 20px; margin-bottom: 24px; flex-wrap: wrap;
+  padding: 14px 18px; background: #fff; border: 0.5px solid var(--border); border-radius: 4px;
+  align-items: center;
+}
+.ctrl-group { display: flex; align-items: center; gap: 8px; }
+.ctrl-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+
+.switch { position: relative; display: inline-block; width: 36px; height: 20px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+  position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+  background: #ddd; border-radius: 20px; transition: 0.2s;
+}
+.slider:before {
+  position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px;
+  background: white; border-radius: 50%; transition: 0.2s;
+}
+input:checked + .slider { background: #111; }
+input:checked + .slider:before { transform: translateX(16px); }
+
+.foto-picker { display: flex; gap: 4px; flex-wrap: wrap; }
+.foto-thumb {
+  width: 38px; height: 38px; border-radius: 3px; cursor: pointer;
+  border: 2px solid transparent; overflow: hidden; transition: all 0.15s;
+}
+.foto-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.foto-thumb.active { border-color: #111; }
+
+.section-label {
+  font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--faint); margin-bottom: 10px; margin-top: 32px;
+}
+.section-label:first-child { margin-top: 0; }
+.var-desc { font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.6; }
+
+/* HERO */
+.hero-desk {
+  position: relative; width: 100%; height: 520px; overflow: hidden; border-radius: 2px;
+}
+.hero-desk-2 {
+  position: relative; width: 100%; height: 520px; overflow: hidden; border-radius: 2px; display: flex;
+}
+.foto-l, .foto-r { position: relative; width: 50%; height: 100%; flex-shrink: 0; overflow: hidden; }
+.hero-mob { position: relative; width: 100%; height: 500px; overflow: hidden; border-radius: 2px; }
+
+.hero-img {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center center; display: block;
+}
+
+.fade-center { position: absolute; inset: 0; background: rgba(0,0,0,0.2); pointer-events: none; z-index: 2; }
+.fade-left {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0.38) 0%, transparent 65%);
+  pointer-events: none; z-index: 2;
+}
+
+.overlay-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  z-index: 3; text-align: center; padding: 32px;
+}
+.overlay-left-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+  z-index: 3; padding: 40px 52px;
+}
+.overlay-left-bottom {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;
+  z-index: 3; padding: 40px 52px;
+}
+
+.banner-tag { font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 6px; }
+.banner-titulo { font-size: 12px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: #fff; line-height: 1.5; margin-bottom: 16px; }
+.banner-desc { font-size: 10px; font-weight: 300; letter-spacing: 0.1em; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 16px; max-width: 260px; }
+.banner-desc.center { text-align: center; }
+.btn-ul { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.55); padding-bottom: 3px; }
+.btn-box { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: #fff; border: 1px solid rgba(255,255,255,0.65); padding: 9px 26px; }
+.hidden { display: none !important; }
+
+/* MOBILE */
+.mob-grid { display: flex; flex-direction: column; gap: 48px; max-width: 360px; margin: 0 auto; }
+.mob-var-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; text-align: center; }
+.mob-frame-wrap { max-width: 360px; margin: 0 auto; }
+.mob-frame { width: 100%; border: 5px solid #111; border-radius: 28px; overflow: hidden; position: relative; }
+.mob-notch { width: 56px; height: 13px; background: #111; border-radius: 0 0 9px 9px; position: absolute; top: 0; left: 50%; transform: translateX(-50%); z-index: 20; }
+
+/* SPECS */
+.spec-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 12px; }
+.spec-table th { text-align: left; font-weight: 400; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 8px 12px; border-bottom: 0.5px solid var(--border); }
+.spec-table td { padding: 10px 12px; border-bottom: 0.5px solid var(--border); color: var(--text); line-height: 1.5; font-size: 12px; }
+.spec-table tr:last-child td { border-bottom: none; }
+
+/* ESCOLHA BOX */
+.escolha-box { background: #fff; border: 0.5px solid var(--border); border-radius: 3px; padding: 20px 24px; margin-top: 40px; }
+.escolha-title { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 10px; }
+.escolha-text { font-size: 12px; color: var(--muted); line-height: 1.8; }
+.escolha-text ul { margin: 10px 0 10px 20px; }
+.escolha-text li { margin-bottom: 6px; }
+.var-options { display: flex; gap: 6px; margin-top: 14px; flex-wrap: wrap; }
+.var-pill { font-size: 10px; letter-spacing: 0.06em; border: 0.5px solid #ccc; padding: 5px 14px; border-radius: 2px; color: var(--muted); }
+
+@media (max-width: 600px) {
+  body { padding: 24px 16px; }
+  .controls-bar { gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="page-tag">Topan by Laura · Redesign Homepage</div>
+  <div class="page-title">Variações — Hero Banner</div>
+  <div class="page-desc">Use os controles para trocar as fotos, ligar e desligar título e descrição, e alternar entre 1 e 2 fotos. Escolha a variação que vai ao ar na estreia do site.</div>
+</div>
+
+<div class="tabs-main">
+  <button class="tab-main active" onclick="setTab('desktop')">Desktop</button>
+  <button class="tab-main" onclick="setTab('mobile')">Mobile</button>
+  <button class="tab-main" onclick="setTab('specs')">Especificações</button>
+</div>
+
+<!-- DESKTOP -->
+<div id="tab-desktop" class="panel active">
+
+  <div class="controls-bar">
+    <div class="ctrl-group">
+      <span class="ctrl-label">Foto 1</span>
+      <div class="foto-picker" id="picker-f1">
+        <div onclick="setFoto('f1',0,this)"><div class="foto-thumb active"><img src="https://californianina.github.io/Topan-Typography/TOPAN0272.jpg"></div></div>
+        <div onclick="setFoto('f1',1,this)"><div class="foto-thumb"><img src="https://californianina.github.io/Topan-Typography/TOPAN0499.jpg"></div></div>
+        <div onclick="setFoto('f1',2,this)"><div class="foto-thumb"><img src="https://californianina.github.io/Topan-Typography/TOPAN0800.jpg"></div></div>
+        <div onclick="setFoto('f1',3,this)"><div class="foto-thumb"><img src="https://californianina.github.io/Topan-Typography/TOPAN0659.jpg"></div></div>
+        <div onclick="setFoto('f1',4,this)"><div class="foto-thumb"><img src="https://californianina.github.io/Topan-Typography/TOPAN0338.jpg"></div></div>
+        <div onclick="setFoto('f1',5,this)"><div class="foto-thumb"><img src="https://californianina.github.io/Topan-Typography/TOPAN1056.jpg"></div></div>
+        <div onclick="setFoto('f1',6,this)"><div class="foto-thumb"><img src="https://californianina.github.io/Topan-Typography/TOPAN0076.jpg"></div></div>
+      </div>
+    </div>
+
+    <div class="ctrl-group">
+      <span class="ctrl-label">Foto 2</span>
+      <div class="foto-picker" id="picker-f2">
+        <div onclick="setFoto('f2',0,this)"><div class="foto-thumb active"><img src="https://californianina.github.io/Topan-Typography/TOPAN0659.jpg"></div></div>
+        <div onclick="setFoto('f2',1,this)"><div class="foto-thumb"><img src="https://californianina.github.io/Topan-Typography/TOPAN0338.jpg"></div></div>
+        <div onclick="setFoto('f2',2,this)"><div class="foto-thumb"><img src="https://californianina.github.io/Topan-Typography/TOPAN1056.jpg"></div></div>
+        <div onclick="setFoto('f2',3,this)"><div class="foto-thumb"><img src="https://californianina.github.io/Topan-Typography/TOPAN0272.jpg"></div></div>
+        <div onclick="setFoto('f2',4,this)"><div class="foto-thumb"><img src="https://californianina.github.io/Topan-Typography/TOPAN0499.jpg"></div></div>
+        <div onclick="setFoto('f2',5,this)"><div class="foto-thumb"><img src="https://californianina.github.io/Topan-Typography/TOPAN0800.jpg"></div></div>
+        <div onclick="setFoto('f2',6,this)"><div class="foto-thumb"><img src="https://californianina.github.io/Topan-Typography/TOPAN0076.jpg"></div></div>
+      </div>
+    </div>
+
+    <div class="ctrl-group">
+      <span class="ctrl-label">Título</span>
+      <label class="switch"><input type="checkbox" id="toggle-titulo" onchange="updateTextos()"><span class="slider"></span></label>
+    </div>
+
+    <div class="ctrl-group">
+      <span class="ctrl-label">Descrição</span>
+      <label class="switch"><input type="checkbox" id="toggle-desc" onchange="updateTextos()"><span class="slider"></span></label>
+    </div>
+
+    <div class="ctrl-group">
+      <span class="ctrl-label">Layout</span>
+      <div style="display:flex;gap:4px;">
+        <button class="tab-main active" id="btn-1foto" onclick="setNumFotos(1)" style="padding:4px 10px;font-size:10px">1 foto</button>
+        <button class="tab-main" id="btn-2fotos" onclick="setNumFotos(2)" style="padding:4px 10px;font-size:10px">2 fotos</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- V1 -->
+  <div class="section-label">Variação 1 — Centralizado · botão underline</div>
+  <div id="desk-v1-1foto"><div class="hero-desk">
+    <img class="hero-img img-f1" src="https://californianina.github.io/Topan-Typography/TOPAN0272.jpg">
+    <div class="fade-center"></div>
+    <div class="overlay-center">
+      <div class="banner-tag el-tag">Coleção Wasabi</div>
+      <div class="banner-titulo el-titulo hidden">Alto Inverno</div>
+      <div class="banner-desc center el-desc hidden">Formas que encontram a leveza</div>
+      <div class="btn-ul">ver coleção</div>
+    </div>
+  </div></div>
+  <div id="desk-v1-2fotos" style="display:none"><div class="hero-desk-2">
+    <div class="foto-l"><img class="hero-img img-f1" src="https://californianina.github.io/Topan-Typography/TOPAN0272.jpg">
+      <div class="fade-center"></div>
+      <div class="overlay-center">
+        <div class="banner-tag el-tag">Coleção Wasabi</div>
+        <div class="banner-titulo el-titulo hidden">Alto Inverno</div>
+        <div class="banner-desc center el-desc hidden">Formas que encontram a leveza</div>
+        <div class="btn-ul">ver coleção</div>
+      </div>
+    </div>
+    <div class="foto-r"><img class="hero-img img-f2" src="https://californianina.github.io/Topan-Typography/TOPAN0659.jpg"></div>
+  </div></div>
+  <div class="var-desc">Texto e botão centralizados verticalmente · referência Letícia Lage</div>
+
+  <!-- V2 -->
+  <div class="section-label">Variação 2 — Centralizado · botão com borda</div>
+  <div id="desk-v2-1foto"><div class="hero-desk">
+    <img class="hero-img img-f1" src="https://californianina.github.io/Topan-Typography/TOPAN0272.jpg">
+    <div class="fade-center"></div>
+    <div class="overlay-center">
+      <div class="banner-tag el-tag">Coleção Wasabi</div>
+      <div class="banner-titulo el-titulo hidden">Alto Inverno</div>
+      <div class="banner-desc center el-desc hidden">Formas que encontram a leveza</div>
+      <div class="btn-box">ver coleção</div>
+    </div>
+  </div></div>
+  <div id="desk-v2-2fotos" style="display:none"><div class="hero-desk-2">
+    <div class="foto-l"><img class="hero-img img-f1" src="https://californianina.github.io/Topan-Typography/TOPAN0272.jpg">
+      <div class="fade-center"></div>
+      <div class="overlay-center">
+        <div class="banner-tag el-tag">Coleção Wasabi</div>
+        <div class="banner-titulo el-titulo hidden">Alto Inverno</div>
+        <div class="banner-desc center el-desc hidden">Formas que encontram a leveza</div>
+        <div class="btn-box">ver coleção</div>
+      </div>
+    </div>
+    <div class="foto-r"><img class="hero-img img-f2" src="https://californianina.github.io/Topan-Typography/TOPAN0659.jpg"></div>
+  </div></div>
+  <div class="var-desc">Texto centralizado · botão com borda branca · mais presença visual · referência Cris Barros</div>
+
+  <!-- V3 -->
+  <div class="section-label">Variação 3 — Esquerda · centralizado verticalmente</div>
+  <div id="desk-v3-1foto"><div class="hero-desk">
+    <img class="hero-img img-f1" src="https://californianina.github.io/Topan-Typography/TOPAN0272.jpg">
+    <div class="fade-left"></div>
+    <div class="overlay-left-center">
+      <div class="banner-tag el-tag">Coleção Wasabi</div>
+      <div class="banner-titulo el-titulo hidden">Alto Inverno</div>
+      <div class="banner-desc el-desc hidden">Formas que encontram a leveza</div>
+      <div class="btn-ul">ver coleção</div>
+    </div>
+  </div></div>
+  <div id="desk-v3-2fotos" style="display:none"><div class="hero-desk-2">
+    <div class="foto-l"><img class="hero-img img-f1" src="https://californianina.github.io/Topan-Typography/TOPAN0272.jpg">
+      <div class="fade-left"></div>
+      <div class="overlay-left-center">
+        <div class="banner-tag el-tag">Coleção Wasabi</div>
+        <div class="banner-titulo el-titulo hidden">Alto Inverno</div>
+        <div class="banner-desc el-desc hidden">Formas que encontram a leveza</div>
+        <div class="btn-ul">ver coleção</div>
+      </div>
+    </div>
+    <div class="foto-r"><img class="hero-img img-f2" src="https://californianina.github.io/Topan-Typography/TOPAN0659.jpg"></div>
+  </div></div>
+  <div class="var-desc">Alinhado à esquerda · centralizado na altura · fade lateral · editorial</div>
+
+  <!-- V4 -->
+  <div class="section-label">Variação 4 — Esquerda · base do banner · estilo Oficina</div>
+  <div id="desk-v4-1foto"><div class="hero-desk">
+    <img class="hero-img img-f1" src="https://californianina.github.io/Topan-Typography/TOPAN0272.jpg">
+    <div class="fade-left"></div>
+    <div class="overlay-left-bottom">
+      <div class="banner-tag el-tag">Coleção Wasabi</div>
+      <div class="banner-titulo el-titulo hidden">Alto Inverno</div>
+      <div class="banner-desc el-desc hidden">Formas que encontram a leveza</div>
+      <div class="btn-ul">ver coleção</div>
+    </div>
+  </div></div>
+  <div id="desk-v4-2fotos" style="display:none"><div class="hero-desk-2">
+    <div class="foto-l"><img class="hero-img img-f1" src="https://californianina.github.io/Topan-Typography/TOPAN0272.jpg">
+      <div class="fade-left"></div>
+      <div class="overlay-left-bottom">
+        <div class="banner-tag el-tag">Coleção Wasabi</div>
+        <div class="banner-titulo el-titulo hidden">Alto Inverno</div>
+        <div class="banner-desc el-desc hidden">Formas que encontram a leveza</div>
+        <div class="btn-ul">ver coleção</div>
+      </div>
+    </div>
+    <div class="foto-r"><img class="hero-img img-f2" src="https://californianina.github.io/Topan-Typography/TOPAN0659.jpg"></div>
+  </div></div>
+  <div class="var-desc">Texto discreto na base esquerda · minimalista · referência Oficina</div>
+
+</div>
+
+<!-- MOBILE -->
+<div id="tab-mobile" class="panel">
+
+  <div class="controls-bar">
+    <div class="ctrl-group">
+      <span class="ctrl-label">Foto</span>
+      <div class="foto-picker" id="mob-picker">
+        <div onclick="setMobFoto(0,this)"><div class="foto-thumb active"><img src="https://californianina.github.io/Topan-Typography/TOPAN0272.jpg"></div></div>
+        <div onclick="setMobFoto(1,this)"><div class="foto-thumb"><img src="https://californianina.github.io/Topan-Typography/TOPAN0499.jpg"></div></div>
+        <div onclick="setMobFoto(2,this)"><div class="foto-thumb"><img src="https://californianina.github.io/Topan-Typography/TOPAN0800.jpg"></div></div>
+        <div onclick="setMobFoto(3,this)"><div class="foto-thumb"><img src="https://californianina.github.io/Topan-Typography/TOPAN0659.jpg"></div></div>
+        <div onclick="setMobFoto(4,this)"><div class="foto-thumb"><img src="https://californianina.github.io/Topan-Typography/TOPAN0338.jpg"></div></div>
+        <div onclick="setMobFoto(5,this)"><div class="foto-thumb"><img src="https://californianina.github.io/Topan-Typography/TOPAN1056.jpg"></div></div>
+        <div onclick="setMobFoto(6,this)"><div class="foto-thumb"><img src="https://californianina.github.io/Topan-Typography/TOPAN0076.jpg"></div></div>
+      </div>
+    </div>
+    <div class="ctrl-group">
+      <span class="ctrl-label">Título</span>
+      <label class="switch"><input type="checkbox" id="mob-toggle-titulo" onchange="updateMobTextos()"><span class="slider"></span></label>
+    </div>
+    <div class="ctrl-group">
+      <span class="ctrl-label">Descrição</span>
+      <label class="switch"><input type="checkbox" id="mob-toggle-desc" onchange="updateMobTextos()"><span class="slider"></span></label>
+    </div>
+  </div>
+
+  <div style="font-size:10px;color:var(--muted);margin-bottom:20px;letter-spacing:0.06em;">
+    Em mobile, o banner sempre exibe 1 foto em full width vertical — independente da escolha de 1 ou 2 fotos no desktop.
+  </div>
+
+  <div class="mob-grid">
+    <div>
+      <div class="mob-var-label">Variação 1 — centralizado · underline</div>
+      <div class="mob-frame-wrap"><div class="mob-frame">
+        <div class="mob-notch"></div>
+        <div class="hero-mob">
+          <img class="hero-img mob-img" src="https://californianina.github.io/Topan-Typography/TOPAN0272.jpg">
+          <div class="fade-center"></div>
+          <div class="overlay-center">
+            <div class="banner-tag mob-el-tag">Coleção Wasabi</div>
+            <div class="banner-titulo mob-el-titulo hidden" style="font-size:11px">Alto Inverno</div>
+            <div class="banner-desc center mob-el-desc hidden" style="font-size:9px;max-width:200px">Formas que encontram a leveza</div>
+            <div class="btn-ul" style="font-size:8px">ver coleção</div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="mob-var-label">Variação 2 — centralizado · borda</div>
+      <div class="mob-frame-wrap"><div class="mob-frame">
+        <div class="mob-notch"></div>
+        <div class="hero-mob">
+          <img class="hero-img mob-img" src="https://californianina.github.io/Topan-Typography/TOPAN0272.jpg">
+          <div class="fade-center"></div>
+          <div class="overlay-center">
+            <div class="banner-tag mob-el-tag">Coleção Wasabi</div>
+            <div class="banner-titulo mob-el-titulo hidden" style="font-size:11px">Alto Inverno</div>
+            <div class="banner-desc center mob-el-desc hidden" style="font-size:9px;max-width:200px">Formas que encontram a leveza</div>
+            <div class="btn-box" style="font-size:8px;padding:7px 20px">ver coleção</div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="mob-var-label">Variação 3 — esquerda · centro vertical</div>
+      <div class="mob-frame-wrap"><div class="mob-frame">
+        <div class="mob-notch"></div>
+        <div class="hero-mob">
+          <img class="hero-img mob-img" src="https://californianina.github.io/Topan-Typography/TOPAN0272.jpg">
+          <div class="fade-left"></div>
+          <div class="overlay-left-center" style="padding:28px 24px">
+            <div class="banner-tag mob-el-tag">Coleção Wasabi</div>
+            <div class="banner-titulo mob-el-titulo hidden" style="font-size:11px">Alto Inverno</div>
+            <div class="banner-desc mob-el-desc hidden" style="font-size:9px;max-width:160px">Formas que encontram a leveza</div>
+            <div class="btn-ul" style="font-size:8px">ver coleção</div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="mob-var-label">Variação 4 — esquerda · base</div>
+      <div class="mob-frame-wrap"><div class="mob-frame">
+        <div class="mob-notch"></div>
+        <div class="hero-mob">
+          <img class="hero-img mob-img" src="https://californianina.github.io/Topan-Typography/TOPAN0272.jpg">
+          <div class="fade-left"></div>
+          <div class="overlay-left-bottom" style="padding:28px 24px">
+            <div class="banner-tag mob-el-tag">Coleção Wasabi</div>
+            <div class="banner-titulo mob-el-titulo hidden" style="font-size:11px">Alto Inverno</div>
+            <div class="banner-desc mob-el-desc hidden" style="font-size:9px;max-width:160px">Formas que encontram a leveza</div>
+            <div class="btn-ul" style="font-size:8px">ver coleção</div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SPECS -->
+<div id="tab-specs" class="panel">
+  <div class="section-label">Campos configuráveis pelo painel da Nuvemshop</div>
+  <table class="spec-table">
+    <tr><th>Campo</th><th>Obrigatório</th><th>Descrição</th></tr>
+    <tr><td>Imagem 1</td><td>Sim</td><td>Foto principal. Desktop: full width (1 foto) ou lado esquerdo (2 fotos). Mobile: sempre full width vertical.</td></tr>
+    <tr><td>Imagem 2</td><td>Não</td><td>Apenas no desktop, lado direito 50%. No mobile não aparece.</td></tr>
+    <tr><td>Tag</td><td>Não</td><td>Texto pequeno acima do botão. Ex: "Coleção Wasabi"</td></tr>
+    <tr><td>Título</td><td>Não</td><td>Linha principal. Ex: "Alto Inverno"</td></tr>
+    <tr><td>Descrição</td><td>Não</td><td>Linha de apoio. Ex: "Formas que encontram a leveza"</td></tr>
+    <tr><td>Botão</td><td>Sim</td><td>Sempre visível. Texto e link configuráveis.</td></tr>
+  </table>
+
+  <div class="section-label" style="margin-top:28px">Resolução recomendada</div>
+  <table class="spec-table">
+    <tr><th>Formato</th><th>Dimensão</th><th>Orientação</th></tr>
+    <tr><td>Desktop — 1 foto</td><td>1920 × 900px</td><td>Horizontal</td></tr>
+    <tr><td>Desktop — 2 fotos (cada)</td><td>960 × 900px</td><td>Horizontal ou vertical</td></tr>
+    <tr><td>Mobile</td><td>800 × 1100px</td><td>Vertical — sujeito centralizado</td></tr>
+  </table>
+</div>
+
+<!-- ESCOLHA -->
+<div class="escolha-box">
+  <div class="escolha-title">Escolha da variação inicial</div>
+  <div class="escolha-text">
+    Escolha qual variação vai ao ar na estreia do site. Depois da publicação, você mesma pode configurar pelo painel da Nuvemshop:
+    <ul>
+      <li><strong>Layout:</strong> 1 foto (full width) ou 2 fotos lado a lado no desktop — no mobile sempre 1 foto</li>
+      <li><strong>Título:</strong> opcional — pode ativar ou desativar</li>
+      <li><strong>Descrição:</strong> opcional — pode ativar ou desatigar</li>
+      <li><strong>Botão:</strong> sempre visível — texto e link configuráveis</li>
+    </ul>
+  </div>
+  <div class="var-options">
+    <div class="var-pill">V1 — centralizado + underline</div>
+    <div class="var-pill">V2 — centralizado + borda</div>
+    <div class="var-pill">V3 — esquerda centro</div>
+    <div class="var-pill">V4 — esquerda base</div>
+    <div class="var-pill">1 foto</div>
+    <div class="var-pill">2 fotos</div>
+    <div class="var-pill">com título</div>
+    <div class="var-pill">sem título</div>
+    <div class="var-pill">com descrição</div>
+  </div>
+</div>
+
+<script>
+const BASE = 'https://californianina.github.io/Topan-Typography/';
+const fotos = ['TOPAN0272.jpg','TOPAN0499.jpg','TOPAN0800.jpg','TOPAN0659.jpg','TOPAN0338.jpg','TOPAN1056.jpg','TOPAN0076.jpg'];
+let curF1 = 0, curF2 = 3, numFotos = 1;
+
+function setFoto(slot, idx, el) {
+  if (slot === 'f1') {
+    curF1 = idx;
+    document.querySelectorAll('#picker-f1 .foto-thumb').forEach((t,i) => t.classList.toggle('active', i===idx));
+    document.querySelectorAll('.img-f1').forEach(img => img.src = BASE + fotos[idx]);
+  } else {
+    curF2 = idx;
+    document.querySelectorAll('#picker-f2 .foto-thumb').forEach((t,i) => t.classList.toggle('active', i===idx));
+    document.querySelectorAll('.img-f2').forEach(img => img.src = BASE + fotos[idx]);
+  }
+}
+
+function setNumFotos(n) {
+  numFotos = n;
+  document.getElementById('btn-1foto').classList.toggle('active', n===1);
+  document.getElementById('btn-2fotos').classList.toggle('active', n===2);
+  ['v1','v2','v3','v4'].forEach(v => {
+    document.getElementById('desk-'+v+'-1foto').style.display = n===1 ? 'block' : 'none';
+    document.getElementById('desk-'+v+'-2fotos').style.display = n===2 ? 'block' : 'none';
+  });
+}
+
+function updateTextos() {
+  const showTitulo = document.getElementById('toggle-titulo').checked;
+  const showDesc = document.getElementById('toggle-desc').checked;
+  document.querySelectorAll('#tab-desktop .el-titulo').forEach(el => el.classList.toggle('hidden', !showTitulo));
+  document.querySelectorAll('#tab-desktop .el-desc').forEach(el => el.classList.toggle('hidden', !showDesc));
+}
+
+function setMobFoto(idx, el) {
+  document.querySelectorAll('#mob-picker .foto-thumb').forEach((t,i) => t.classList.toggle('active', i===idx));
+  document.querySelectorAll('.mob-img').forEach(img => img.src = BASE + fotos[idx]);
+}
+
+function updateMobTextos() {
+  const showTitulo = document.getElementById('mob-toggle-titulo').checked;
+  const showDesc = document.getElementById('mob-toggle-desc').checked;
+  document.querySelectorAll('.mob-el-titulo').forEach(el => el.classList.toggle('hidden', !showTitulo));
+  document.querySelectorAll('.mob-el-desc').forEach(el => el.classList.toggle('hidden', !showDesc));
+}
+
+function setTab(tab) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.querySelectorAll('.tabs-main .tab-main').forEach(b => {
+    b.classList.toggle('active', b.textContent.toLowerCase().trim() === tab ||
+      (tab === 'specs' && b.textContent.toLowerCase().includes('spec')));
+  });
+  document.getElementById('btn-1foto').classList.toggle('active', numFotos===1);
+  document.getElementById('btn-2fotos').classList.toggle('active', numFotos===2);
+}
+</script>
+</body>
+</html>
